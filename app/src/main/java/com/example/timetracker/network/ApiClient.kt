@@ -1,9 +1,7 @@
 package com.example.timetracker.network
 
-import com.example.timetracker.models.ClockInOutRespone
-import com.example.timetracker.models.JobDetailsResponse
-import com.example.timetracker.models.LoginRequest
-import com.example.timetracker.models.LoginResponse
+import com.example.timetracker.MyApplication
+import com.example.timetracker.models.*
 import io.reactivex.Observable
 
 
@@ -14,15 +12,15 @@ class ApiClient {
     }
 
     fun getWorkDetails(): Observable<JobDetailsResponse> {
-        return ServiceGenerator.instance.getRepoApi().getWorkDetails()
+        return ServiceGenerator.instance.getRepoApi().getWorkDetails("Token " +MyApplication.key)
     }
 
-    fun updateClockIn(): Observable<ClockInOutRespone> {
-        return ServiceGenerator.instance.getRepoApi().postClockIn()
+    fun updateClockIn(checkInChekOutRequest: CheckInChekOutRequest): Observable<ClockInOutRespone> {
+        return ServiceGenerator.instance.getRepoApi().postClockIn(checkInChekOutRequest,"Token " +MyApplication.key)
     }
 
-    fun updateClockOut(): Observable<ClockInOutRespone> {
-        return ServiceGenerator.instance.getRepoApi().postClockOut()
+    fun updateClockOut(checkInChekOutRequest: CheckInChekOutRequest): Observable<ClockInOutRespone> {
+        return ServiceGenerator.instance.getRepoApi().postClockOut(checkInChekOutRequest,"Token " +MyApplication.key)
     }
 
 }

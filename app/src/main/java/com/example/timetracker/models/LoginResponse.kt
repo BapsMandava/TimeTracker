@@ -6,5 +6,5 @@ data class LoginResponse(
 
 data class LoginRequest(
     var username: String,
-    val passowrd: String
+    val password: String
 )

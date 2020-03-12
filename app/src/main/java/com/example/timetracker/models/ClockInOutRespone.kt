@@ -33,3 +33,8 @@ data class Partner(
     val last_name: String,
     val mobile: String
 )
+
+data class CheckInChekOutRequest(
+    var latitude: String,
+    val longitude: String
+)

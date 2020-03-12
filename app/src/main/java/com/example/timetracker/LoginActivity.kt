@@ -1,5 +1,6 @@
 package com.example.timetracker
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -55,14 +56,14 @@ class LoginActivity : BaseActivity() {
         var loginRequest =  LoginRequest(etLoginId.text.toString(),etPassword.text.toString())
         loginViewModel.perforLogin(loginRequest).observe(this, Observer { repoList ->
             Log.i(TAG, "Viewmodel response: $repoList")
-
             repoList?.let {
-
                 showProgressBar(false)
                 if (it?.key.isNotEmpty()) {
                     loginResponse = it
                     MyApplication.Companion.setkey(it.key)
                     Toast.makeText(this, "Login Success", Toast.LENGTH_SHORT).show()
+                    var showJobDetailsScreen = Intent(this, MainActivity::class.java)
+                    startActivity(showJobDetailsScreen)
 
                 } else {
                     Toast.makeText(this, "Login Failed", Toast.LENGTH_SHORT).show()

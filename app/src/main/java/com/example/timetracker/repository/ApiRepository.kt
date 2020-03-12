@@ -1,10 +1,7 @@
 package com.example.timetracker.repository
 
 import android.content.Context
-import com.example.timetracker.models.ClockInOutRespone
-import com.example.timetracker.models.JobDetailsResponse
-import com.example.timetracker.models.LoginRequest
-import com.example.timetracker.models.LoginResponse
+import com.example.timetracker.models.*
 import com.example.timetracker.network.ApiClient
 import com.example.timetracker.utils.ConnectivityUtil
 
@@ -37,21 +34,21 @@ class ApiRepository(private val context: Context) {
         return Observable.concatArrayEager(observableFromApi)
     }
 
-    fun updateClockIn(): Observable<ClockInOutRespone> {
+    fun updateClockIn(checkInChekOutRequest:CheckInChekOutRequest): Observable<ClockInOutRespone> {
         val hasConnection = ConnectivityUtil.isNetworkAvailable(context)
         var observableFromApi: Observable<ClockInOutRespone>? = null
         if (hasConnection) {
-            observableFromApi = updateClockInFromApi()
+            observableFromApi = updateClockInFromApi(checkInChekOutRequest)
         }
 
         return Observable.concatArrayEager(observableFromApi)
     }
 
-    fun updateClockOut(): Observable<ClockInOutRespone> {
+    fun updateClockOut(checkInChekOutRequest: CheckInChekOutRequest): Observable<ClockInOutRespone> {
         val hasConnection = ConnectivityUtil.isNetworkAvailable(context)
         var observableFromApi: Observable<ClockInOutRespone>? = null
         if (hasConnection) {
-            observableFromApi = updateClockOutFromApi()
+            observableFromApi = updateClockOutFromApi(checkInChekOutRequest)
         }
 
         return Observable.concatArrayEager(observableFromApi)
@@ -67,13 +64,13 @@ class ApiRepository(private val context: Context) {
     }
 
 
-    private fun updateClockInFromApi(): Observable<ClockInOutRespone> {
-        return repoApiClient.updateClockIn()
+    private fun updateClockInFromApi(checkInChekOutRequest: CheckInChekOutRequest): Observable<ClockInOutRespone> {
+        return repoApiClient.updateClockIn(checkInChekOutRequest)
     }
 
 
-    private fun updateClockOutFromApi(): Observable<ClockInOutRespone> {
-        return repoApiClient.updateClockOut()
+    private fun updateClockOutFromApi(checkInChekOutRequest: CheckInChekOutRequest): Observable<ClockInOutRespone> {
+        return repoApiClient.updateClockOut(checkInChekOutRequest)
     }
 
 }

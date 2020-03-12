@@ -11,7 +11,7 @@ class MyApplication : Application() {
 
     companion object {
         private var instance: MyApplication? = null
-        private lateinit var key: String
+        lateinit var key: String
         fun applicationContext() : MyApplication {
             return instance as MyApplication
         }
