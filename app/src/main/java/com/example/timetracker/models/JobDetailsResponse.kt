@@ -1,4 +1,4 @@
-package com.example.timetracker
+package com.example.timetracker.models
 
 data class JobDetailsResponse(
     val client: Client,
