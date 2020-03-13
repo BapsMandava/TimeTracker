@@ -8,10 +8,10 @@ import android.os.Handler
 import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.databinding.DataBindingUtil
+
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.example.timetracker.databinding.ActivityMainBinding
+
 import com.example.timetracker.models.CheckInChekOutRequest
 import com.example.timetracker.models.LoginRequest
 import com.example.timetracker.models.LoginResponse
@@ -23,11 +23,17 @@ import kotlinx.android.synthetic.main.activity_main.view.*
 
 import android.os.Looper
 import androidx.annotation.RequiresApi
-import androidx.databinding.adapters.TextViewBindingAdapter.setText
+import androidx.databinding.DataBindingUtil
+import com.example.timetracker.databinding.ActivityMainBinding
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 import java.util.*
+import androidx.core.app.ComponentActivity.ExtraData
+import androidx.core.content.ContextCompat.getSystemService
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+import java.text.ParseException
+import java.text.SimpleDateFormat
 
 
 class MainActivity : BaseActivity() {
@@ -76,9 +82,9 @@ class MainActivity : BaseActivity() {
 
     private fun getJobDetails() {
         showProgressBar(true)
-        timeTrackerViewModel.getWorkDetails().observe(this, Observer { repoList ->
-            Log.i(LoginActivity.TAG, "Viewmodel response: $repoList")
-            repoList?.let {
+        timeTrackerViewModel.getWorkDetails().observe(this, Observer { data ->
+            Log.i(LoginActivity.TAG, "Viewmodel response: $data")
+            data?.let {
                 showProgressBar(false)
                 binding.jobDetails = it
             }
@@ -89,27 +95,29 @@ class MainActivity : BaseActivity() {
     private fun updateCheckIn() {
         showProgressBar(true)
         timeTrackerViewModel.updateClockIn(checkInChekOutRequest)
-            .observe(this, Observer { repoList ->
-                Log.i(LoginActivity.TAG, "Viewmodel response: $repoList")
-                repoList?.let {
+            .observe(this, Observer { data ->
+                Log.i(LoginActivity.TAG, "Viewmodel response: $data")
+                data?.let {
                     showProgressBar(false)
                     if (it != null) {
                         circle_button.setText("Clock Out")
-                        txtClockInValue.setText(it.clock_in_time)
+                        txtClockInValue.setText(it.clock_in_time.substring(11,19))
                     }
                 }
             })
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun updateCheckOut() {
         showProgressBar(true)
         timeTrackerViewModel.updateClockOut(checkInChekOutRequest)
-            .observe(this, Observer { repoList ->
-                Log.i(LoginActivity.TAG, "Viewmodel response: $repoList")
-                repoList?.let {
+            .observe(this, Observer { data ->
+                Log.i(LoginActivity.TAG, "Viewmodel response: $data")
+                data?.let {
                     showProgressBar(false)
                     if (it != null) {
                         circle_button.setText("Clock In")
+                        txtClockOutValue.setText(it.timesheet.clock_out_time.substring(11,19))
                     }
                 }
             })
@@ -124,6 +132,4 @@ class MainActivity : BaseActivity() {
             updateCheckOut()
         }
     }
-
-
 }

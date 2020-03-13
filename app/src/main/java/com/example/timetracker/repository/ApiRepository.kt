@@ -44,9 +44,9 @@ class ApiRepository(private val context: Context) {
         return Observable.concatArrayEager(observableFromApi)
     }
 
-    fun updateClockOut(checkInChekOutRequest: CheckInChekOutRequest): Observable<ClockInOutRespone> {
+    fun updateClockOut(checkInChekOutRequest: CheckInChekOutRequest): Observable<ClockOutResponse> {
         val hasConnection = ConnectivityUtil.isNetworkAvailable(context)
-        var observableFromApi: Observable<ClockInOutRespone>? = null
+        var observableFromApi: Observable<ClockOutResponse>? = null
         if (hasConnection) {
             observableFromApi = updateClockOutFromApi(checkInChekOutRequest)
         }
@@ -69,7 +69,7 @@ class ApiRepository(private val context: Context) {
     }
 
 
-    private fun updateClockOutFromApi(checkInChekOutRequest: CheckInChekOutRequest): Observable<ClockInOutRespone> {
+    private fun updateClockOutFromApi(checkInChekOutRequest: CheckInChekOutRequest): Observable<ClockOutResponse> {
         return repoApiClient.updateClockOut(checkInChekOutRequest)
     }
 

@@ -19,7 +19,7 @@ class ApiClient {
         return ServiceGenerator.instance.getRepoApi().postClockIn(checkInChekOutRequest,"Token " +MyApplication.key)
     }
 
-    fun updateClockOut(checkInChekOutRequest: CheckInChekOutRequest): Observable<ClockInOutRespone> {
+    fun updateClockOut(checkInChekOutRequest: CheckInChekOutRequest): Observable<ClockOutResponse> {
         return ServiceGenerator.instance.getRepoApi().postClockOut(checkInChekOutRequest,"Token " +MyApplication.key)
     }
 

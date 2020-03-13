@@ -4,10 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.timetracker.models.CheckInChekOutRequest
-import com.example.timetracker.models.ClockInOutRespone
-import com.example.timetracker.models.JobDetailsResponse
-import com.example.timetracker.models.LoginResponse
+import com.example.timetracker.models.*
 import com.example.timetracker.repository.ApiRepository
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -20,7 +17,7 @@ class TimeTrackerViewModel(application: Application) : AndroidViewModel(applicat
     private val repository: ApiRepository
     var workDetailsResponse: MutableLiveData<JobDetailsResponse> = MutableLiveData()
     var clockInRespone: MutableLiveData<ClockInOutRespone> = MutableLiveData()
-    var clockOutRespone: MutableLiveData<ClockInOutRespone> = MutableLiveData()
+    var clockOutRespone: MutableLiveData<ClockOutResponse> = MutableLiveData()
     private val mDisposables = CompositeDisposable()
 
     init {
@@ -57,8 +54,8 @@ class TimeTrackerViewModel(application: Application) : AndroidViewModel(applicat
         return clockInRespone
     }
 
-    fun updateClockOut(checkInChekOutRequest:CheckInChekOutRequest): LiveData<ClockInOutRespone> {
-        val observable: Observable<ClockInOutRespone> = repository.updateClockOut(checkInChekOutRequest)
+    fun updateClockOut(checkInChekOutRequest:CheckInChekOutRequest): LiveData<ClockOutResponse> {
+        val observable: Observable<ClockOutResponse> = repository.updateClockOut(checkInChekOutRequest)
         val result = observable.subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ result ->

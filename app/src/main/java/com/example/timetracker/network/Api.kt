@@ -20,8 +20,5 @@ interface Api {
     fun postClockIn(@Body body: CheckInChekOutRequest,@Header("Authorization") Token : String): Observable<ClockInOutRespone>
 
      @POST(value = Constants.POST_CLOCK_OUT)
-    fun postClockOut(@Body body: CheckInChekOutRequest,@Header("Authorization") Token : String): Observable<ClockInOutRespone>
-
-/*    @POST(value = Constants.SELECTION_ID)
-    fun postSelectionID(@Query("id", encoded = true) id: String): Observable<String>*/
+    fun postClockOut(@Body body: CheckInChekOutRequest,@Header("Authorization") Token : String): Observable<ClockOutResponse>
 }

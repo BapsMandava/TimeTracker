@@ -38,3 +38,37 @@ data class CheckInChekOutRequest(
     var latitude: String,
     val longitude: String
 )
+
+data class ClockOutResponse (
+    val timesheet : Timesheet,
+    val require_feedback : Boolean
+)
+
+data class Timesheet (
+
+    val id : Int,
+    val clock_in_time : String,
+    val clock_out_time : String,
+    val clock_in_latitude : Double,
+    val clock_in_longitude : Double,
+    val clock_out_latitude : Double,
+    val clock_out_longitude : Double,
+    val partner : Partner,
+    val timesheet : Int,
+    val status : String,
+    val notes : String,
+    val staff_request : Staff_request,
+    val schedule : String
+)
+
+
+data class Staff_request (
+
+    val id : Int,
+    val uid : String,
+    val status : String,
+    val title : String,
+    val location : Location,
+    val client : Client,
+    val position : Position
+)
